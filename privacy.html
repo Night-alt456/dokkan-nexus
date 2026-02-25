@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Dokkan Nexus</title>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;600;700&family=Jura:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #ffb830;
+    --orange: #e05a00;
+    --dark-orange: #8a3300;
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --text: #d4c5a9;
+    --muted: #6b5f4e;
+    --ring: #be5a0a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Jura', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200vw;
+    height: 200vh;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(180, 80, 0, 0.03) 10deg,
+      transparent 20deg,
+      rgba(180, 80, 0, 0.02) 35deg,
+      transparent 45deg,
+      rgba(180, 80, 0, 0.03) 60deg,
+      transparent 75deg,
+      rgba(180, 80, 0, 0.02) 90deg,
+      transparent 105deg,
+      rgba(180, 80, 0, 0.03) 120deg,
+      transparent 135deg,
+      rgba(180, 80, 0, 0.02) 150deg,
+      transparent 165deg,
+      rgba(180, 80, 0, 0.03) 180deg,
+      transparent 195deg,
+      rgba(180, 80, 0, 0.02) 210deg,
+      transparent 225deg,
+      rgba(180, 80, 0, 0.03) 240deg,
+      transparent 255deg,
+      rgba(180, 80, 0, 0.02) 270deg,
+      transparent 285deg,
+      rgba(180, 80, 0, 0.03) 300deg,
+      transparent 315deg,
+      rgba(180, 80, 0, 0.02) 330deg,
+      transparent 345deg,
+      rgba(180, 80, 0, 0.03) 360deg
+    );
+    animation: rotateBg 60s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes rotateBg {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid var(--dark-orange);
+  }
+
+  .logo-n {
+    font-family: 'Tektur', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    background: linear-gradient(180deg, #ffe080 0%, #ff8c00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(255, 140, 0, 0.6));
+    letter-spacing: -2px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .brand-name {
+    font-family: 'Tektur', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--ring);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+
+  h1 {
+    font-family: 'Tektur', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .effective-date {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 50px 30px 80px;
+  }
+
+  .intro {
+    background: linear-gradient(135deg, rgba(190, 90, 10, 0.08), rgba(255, 140, 0, 0.04));
+    border: 1px solid rgba(190, 90, 10, 0.25);
+    border-left: 3px solid var(--orange);
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #a89070;
+  }
+
+  section {
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section:nth-child(1) { animation-delay: 0.1s; }
+  section:nth-child(2) { animation-delay: 0.15s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.25s; }
+  section:nth-child(5) { animation-delay: 0.3s; }
+  section:nth-child(6) { animation-delay: 0.35s; }
+  section:nth-child(7) { animation-delay: 0.4s; }
+
+  .section-num {
+    font-family: 'Tektur', sans-serif;
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  h2 {
+    font-family: 'Tektur', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(190, 90, 10, 0.2);
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+
+  ul li {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 11px;
+    top: 3px;
+  }
+
+  .highlight-box {
+    background: rgba(255, 184, 48, 0.05);
+    border: 1px solid rgba(255, 184, 48, 0.15);
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #c4a870;
+  }
+
+  a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 184, 48, 0.3);
+    transition: border-color 0.2s;
+  }
+
+  a:hover { border-color: var(--gold); }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--dark-orange);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  footer a { color: var(--ring); font-size: 12px; }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    margin: 0 auto 48px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo-n">N</span>
+  <div class="brand-name">Dokkan Nexus</div>
+  <h1>Privacy Policy</h1>
+  <p class="effective-date">Effective Date: February 25, 2026</p>
+</header>
+
+<main>
+  <div class="intro">
+    Your privacy matters. This Privacy Policy explains what data Dokkan Nexus collects, how it is used, and how it is protected. By using the Bot, you agree to the practices described here.
+  </div>
+
+  <section>
+    <div class="section-num">01</div>
+    <h2>What Data We Collect</h2>
+    <p>Dokkan Nexus collects only the minimum data necessary to operate its features:</p>
+    <ul>
+      <li><strong>Discord User ID</strong> — used to associate community team submissions with your account and manage deletion permissions.</li>
+      <li><strong>Discord Username</strong> — displayed alongside community team submissions so others can credit the contributor.</li>
+      <li><strong>Discord Server Name</strong> — displayed alongside team submissions to indicate which server the submission originated from.</li>
+      <li><strong>Community Team Submissions</strong> — the team data you voluntarily submit via <code>/submitteam</code>, including card selections, event, stage, and notes.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-num">02</div>
+    <h2>What We Do NOT Collect</h2>
+    <div class="highlight-box">
+      Dokkan Nexus does <strong>not</strong> collect message content, passwords, email addresses, payment information, or any personal information beyond what is listed above.
+    </div>
+    <p>The Bot does not monitor or log general Discord messages. It only processes data when a slash command is explicitly used.</p>
+  </section>
+
+  <section>
+    <div class="section-num">03</div>
+    <h2>How We Use Your Data</h2>
+    <p>Collected data is used solely to:</p>
+    <ul>
+      <li>Display community team submissions to other users across servers.</li>
+      <li>Allow you to manage and delete your own submissions.</li>
+      <li>Send moderation notifications (e.g. if a submission is removed by a moderator).</li>
+    </ul>
+    <p>Your data is never sold, shared with third parties, or used for advertising purposes.</p>
+  </section>
+
+  <section>
+    <div class="section-num">04</div>
+    <h2>Data Storage</h2>
+    <p>All data is stored locally in a SQLite database on the server hosting Dokkan Nexus. We take reasonable precautions to protect stored data, but cannot guarantee absolute security.</p>
+    <p>Data is retained for as long as your submissions exist. Deleting your submissions via <code>/deleteteam</code> removes your data from the database.</p>
+  </section>
+
+  <section>
+    <div class="section-num">05</div>
+    <h2>Your Rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Delete your own community team submissions at any time using <code>/deleteteam</code>.</li>
+      <li>Request deletion of all data associated with your Discord User ID by contacting us directly.</li>
+      <li>Know what data is stored about you upon request.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-num">06</div>
+    <h2>Third-Party Services</h2>
+    <p>Dokkan Nexus sources card data from the <a href="https://dbz-dokkanbattle.fandom.com" target="_blank">Dokkan Battle Fandom Wiki</a>. No user data is shared with or transmitted to the wiki or any other third-party service.</p>
+    <p>The Bot operates within Discord's platform and is subject to <a href="https://discord.com/privacy" target="_blank">Discord's Privacy Policy</a>.</p>
+  </section>
+
+  <section>
+    <div class="section-num">07</div>
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Continued use of the Bot after changes constitutes acceptance of the updated policy. Where possible, significant changes will be announced.</p>
+  </section>
+
+  <section>
+    <div class="section-num">08</div>
+    <h2>Contact</h2>
+    <p>For privacy-related questions or data deletion requests, please contact us via GitHub at <a href="https://github.com/Night-alt456" target="_blank">github.com/Night-alt456</a>.</p>
+  </section>
+
+  <div class="divider"></div>
+  <p style="text-align:center; font-size:12px; color: var(--muted);">
+    Also see our <a href="tos.html">Terms of Service</a>
+  </p>
+</main>
+
+<footer>
+  &copy; 2026 Dokkan Nexus &nbsp;·&nbsp; <a href="tos.html">Terms of Service</a> &nbsp;·&nbsp; Not affiliated with Bandai Namco or Akatsuki Inc.
+</footer>
+
+</body>
+</html>

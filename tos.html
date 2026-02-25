@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Dokkan Nexus</title>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;600;700&family=Jura:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #ffb830;
+    --orange: #e05a00;
+    --dark-orange: #8a3300;
+    --bg: #080808;
+    --bg2: #0f0f0f;
+    --text: #d4c5a9;
+    --muted: #6b5f4e;
+    --ring: #be5a0a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Jura', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background rays */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 200vw;
+    height: 200vh;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(180, 80, 0, 0.03) 10deg,
+      transparent 20deg,
+      rgba(180, 80, 0, 0.02) 35deg,
+      transparent 45deg,
+      rgba(180, 80, 0, 0.03) 60deg,
+      transparent 75deg,
+      rgba(180, 80, 0, 0.02) 90deg,
+      transparent 105deg,
+      rgba(180, 80, 0, 0.03) 120deg,
+      transparent 135deg,
+      rgba(180, 80, 0, 0.02) 150deg,
+      transparent 165deg,
+      rgba(180, 80, 0, 0.03) 180deg,
+      transparent 195deg,
+      rgba(180, 80, 0, 0.02) 210deg,
+      transparent 225deg,
+      rgba(180, 80, 0, 0.03) 240deg,
+      transparent 255deg,
+      rgba(180, 80, 0, 0.02) 270deg,
+      transparent 285deg,
+      rgba(180, 80, 0, 0.03) 300deg,
+      transparent 315deg,
+      rgba(180, 80, 0, 0.02) 330deg,
+      transparent 345deg,
+      rgba(180, 80, 0, 0.03) 360deg
+    );
+    animation: rotateBg 60s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes rotateBg {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid var(--dark-orange);
+  }
+
+  .logo-n {
+    font-family: 'Tektur', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    background: linear-gradient(180deg, #ffe080 0%, #ff8c00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(255, 140, 0, 0.6));
+    letter-spacing: -2px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .brand-name {
+    font-family: 'Tektur', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: var(--ring);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+
+  h1 {
+    font-family: 'Tektur', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .effective-date {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 50px 30px 80px;
+  }
+
+  .intro {
+    background: linear-gradient(135deg, rgba(190, 90, 10, 0.08), rgba(255, 140, 0, 0.04));
+    border: 1px solid rgba(190, 90, 10, 0.25);
+    border-left: 3px solid var(--orange);
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #a89070;
+  }
+
+  section {
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section:nth-child(1) { animation-delay: 0.1s; }
+  section:nth-child(2) { animation-delay: 0.15s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.25s; }
+  section:nth-child(5) { animation-delay: 0.3s; }
+  section:nth-child(6) { animation-delay: 0.35s; }
+  section:nth-child(7) { animation-delay: 0.4s; }
+  section:nth-child(8) { animation-delay: 0.45s; }
+
+  .section-num {
+    font-family: 'Tektur', sans-serif;
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  h2 {
+    font-family: 'Tektur', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(190, 90, 10, 0.2);
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+
+  ul li {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 11px;
+    top: 3px;
+  }
+
+  a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 184, 48, 0.3);
+    transition: border-color 0.2s;
+  }
+
+  a:hover { border-color: var(--gold); }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid var(--dark-orange);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  footer a { color: var(--ring); font-size: 12px; }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    margin: 0 auto 48px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo-n">N</span>
+  <div class="brand-name">Dokkan Nexus</div>
+  <h1>Terms of Service</h1>
+  <p class="effective-date">Effective Date: February 25, 2026</p>
+</header>
+
+<main>
+  <div class="intro">
+    By using Dokkan Nexus ("the Bot") on Discord, you agree to these Terms of Service. Please read them carefully. If you do not agree, please refrain from using the Bot.
+  </div>
+
+  <section>
+    <div class="section-num">01</div>
+    <h2>About Dokkan Nexus</h2>
+    <p>Dokkan Nexus is a Discord bot created and operated by Night-alt456. It provides Dragon Ball Z: Dokkan Battle community features including card lookups, team building tools, community team submissions, summon simulations, and related functionality.</p>
+    <p>Dokkan Nexus is an independent fan project and is not affiliated with, endorsed by, or connected to Bandai Namco Entertainment, Akatsuki Inc., Toei Animation, or any other rights holder of Dragon Ball Z: Dokkan Battle.</p>
+  </section>
+
+  <section>
+    <div class="section-num">02</div>
+    <h2>Eligibility</h2>
+    <p>By using the Bot, you confirm that:</p>
+    <ul>
+      <li>You are at least 13 years of age, or the minimum age required by Discord's Terms of Service in your jurisdiction.</li>
+      <li>You have read and agree to <a href="https://discord.com/terms" target="_blank">Discord's Terms of Service</a>.</li>
+      <li>You are using the Bot for lawful purposes only.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-num">03</div>
+    <h2>Acceptable Use</h2>
+    <p>You agree not to use Dokkan Nexus to:</p>
+    <ul>
+      <li>Submit abusive, offensive, or spam content through community features such as team submissions.</li>
+      <li>Attempt to exploit, reverse-engineer, or disrupt the Bot's functionality.</li>
+      <li>Harass or harm other users through Bot interactions.</li>
+      <li>Violate any applicable laws or regulations.</li>
+      <li>Submit false or misleading information.</li>
+    </ul>
+    <p>We reserve the right to restrict or ban users who violate these terms without prior notice.</p>
+  </section>
+
+  <section>
+    <div class="section-num">04</div>
+    <h2>Community Content</h2>
+    <p>Dokkan Nexus allows users to submit community team builds and related content. By submitting content, you grant us a non-exclusive, royalty-free license to store and display that content within the Bot.</p>
+    <p>You are solely responsible for any content you submit. We reserve the right to remove content that violates these Terms or is otherwise deemed inappropriate, with notification sent to the submitting user where possible.</p>
+  </section>
+
+  <section>
+    <div class="section-num">05</div>
+    <h2>Disclaimers</h2>
+    <p>Dokkan Nexus is provided "as is" without warranties of any kind. We do not guarantee:</p>
+    <ul>
+      <li>Continuous, uninterrupted availability of the Bot.</li>
+      <li>The accuracy or completeness of card data sourced from the Dokkan Battle wiki.</li>
+      <li>That the Bot will be free from bugs or errors.</li>
+    </ul>
+    <p>We are not liable for any damages arising from your use of or inability to use the Bot.</p>
+  </section>
+
+  <section>
+    <div class="section-num">06</div>
+    <h2>Third-Party Content</h2>
+    <p>Card data, images, and game information displayed by the Bot are sourced from the <a href="https://dbz-dokkanbattle.fandom.com" target="_blank">Dokkan Battle Fandom Wiki</a> and belong to their respective rights holders. Dokkan Nexus does not claim ownership of any Dragon Ball Z: Dokkan Battle intellectual property.</p>
+  </section>
+
+  <section>
+    <div class="section-num">07</div>
+    <h2>Changes to These Terms</h2>
+    <p>We may update these Terms of Service at any time. Continued use of the Bot after changes constitutes acceptance of the updated terms. Significant changes will be announced where possible.</p>
+  </section>
+
+  <section>
+    <div class="section-num">08</div>
+    <h2>Contact</h2>
+    <p>For questions or concerns regarding these Terms, please contact us via GitHub at <a href="https://github.com/Night-alt456" target="_blank">github.com/Night-alt456</a>.</p>
+  </section>
+
+  <div class="divider"></div>
+  <p style="text-align:center; font-size:12px; color: var(--muted);">
+    Also see our <a href="privacy.html">Privacy Policy</a>
+  </p>
+</main>
+
+<footer>
+  &copy; 2026 Dokkan Nexus &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; Not affiliated with Bandai Namco or Akatsuki Inc.
+</footer>
+
+</body>
+</html>
