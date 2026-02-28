@@ -16,7 +16,7 @@ DB_PATH = DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "do
 
 TYPE_COLORS = {
     "AGL": discord.Color.blue(),
-    "TEQ": discord.Color.teal(),
+    "TEQ": discord.Color.green(),
     "INT": discord.Color.purple(),
     "STR": discord.Color.red(),
     "PHY": discord.Color.orange(),
@@ -26,23 +26,20 @@ TYPE_COLORS = {
 #E.g. "AGL": "<:AGL:123456789012345678>"
 
 TYPE_EMOJIS = {
-    "AGL": "<:AGL:1475499065134288987>",
-    "TEQ": "<:TEQ:1475500519031312444>",
-    "INT": "<:INT:1475500464882843668>",
-    "STR": "<:STR:1475500274196938955>",
-    "PHY": "<:PHY:1475500320837865593>",
+    "AGL": "<:AGL:1477068036081979394>",
+    "TEQ": "<:TEQ:1477068030298030141>",
+    "INT": "<:INT:1477068031535485110>",
+    "STR": "<:STR:1477068034660237312>",
+    "PHY": "<:PHY:1477068033020264623>",
 }
 
-# Replace these with your actual server emoji IDs
-#e.g. "LR": "<:LR:123456789012345678>"
-
 RARITY_EMOJIS = {
-    "LR":  "<:LR:1475501050210287717>",
-    "UR":  "<:UR:1475500998939119690>", 
-    "SSR": "<:SSR:1475500937417330698>", 
-    "SR":  "<:SR:1475500902948536363>",  
-    "R":   "<:R:1475500855154184274>",
-    "N":   "<:N:1475500771930935428>",
+    "LR":  "<:LR:1477068021901037668>",
+    "UR":  "<:UR:1477068023511777300>",
+    "SSR": "<:SSR:1477068024774398094>",
+    "SR":  "<:SR:1477068026456314028>",
+    "R":   "<:R:1477068027903082566>",
+    "N":   "<:N:1477068029152989204>",
 }
 
 # ======================
@@ -56,26 +53,20 @@ MOD_ROLE_NAME = "Dokkan Mod"
 
 # Current challenge events — update this list when new events release
 CHALLENGE_EVENTS = [
-    "Super Battle Road",
-    "Ultimate Red Zone",
-    "Extreme Z-Area",
-    "Virtual Dokkan Ultimate Clash",
-    "Festival of Battles",
-    "Seriously Serious! All-Out Battles",
-    "Supreme Magnificent Battle",
-    "Battle-Hardened Formidable Foes",
-    "Boss Rush",
-    "Infinite Dragon Ball History",
-    "Legend of Goku",
-    "Dokkan Festival",
-    "Anniversary Battle",
+    "Fighting Legend Goku",
+    "Fighting Legend Vegeta",
+    "Fighting Legend Frieza",
+    "Dokkan Event Boss Rush",
     "Collection of Epic Battles",
-    "Extreme Dokkan Festival",
-    "Super Dokkan Festival",
-    "Legendary Goku Event",
-    "Phantom Zone",
-    "Strike Events",
-    "Treasure Dungeon",
+    "Super Battle Road",
+    "Fearsome Activition Cell Max",
+    "Fighting Sprit of the Saiyans and Pride of the Wicked Bloodline",
+    "Intense Fights",
+    "Heart-Pounding Heroine Battle",
+    "Festival of Battle",
+    "Ultimate Red Zone",
+    "Supreme Magnificent Battle",
+    "The Greatest Tours",
 ]
 
 # ======================
@@ -215,42 +206,21 @@ TEAM_LOG_CHANNEL_ID = 1476108750384398376  # Channel where submitted teams are p
 SERVER_COUNT_CHANNEL_ID = 1476257939470942279  # Replace with your voice channel ID
 
 @bot.event
+@bot.event
 async def on_ready():
     init_community_db()
+    
+    # Fetch application emojis dynamically
+    app_emojis = await bot.fetch_application_emojis()
+    for emoji in app_emojis:
+        if emoji.name in TYPE_EMOJIS:
+            TYPE_EMOJIS[emoji.name] = str(emoji)
+        if emoji.name in RARITY_EMOJIS:
+            RARITY_EMOJIS[emoji.name] = str(emoji)
+    
     await bot.tree.sync()
     print(f"✅ Logged in as {bot.user}")
-    if not db_exists():
-        print("⚠️  Database is empty! Run: python sync.py")
-    else:
-        count, last_sync = db_count()
-        print(f"🗄️  Database: {count} cards | Last sync: {last_sync}")
-    await update_server_count()
-    if not auto_sync.is_running():
-        auto_sync.start()
-        print("🔄 Auto-sync task started (every 8 hours)")
 
-@tasks.loop(hours=8)
-async def auto_sync():
-    print("🔄 Running scheduled --update sync...")
-    try:
-        import asyncio
-        proc = await asyncio.create_subprocess_exec(
-            "python", "sync.py", "--update",
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE
-        )
-        stdout, stderr = await proc.communicate()
-        if stdout:
-            print(stdout.decode())
-        if stderr:
-            print(stderr.decode())
-        print("✅ Scheduled sync complete!")
-    except Exception as e:
-        print(f"❌ Scheduled sync failed: {e}")
-
-@auto_sync.before_loop
-async def before_auto_sync():
-    await bot.wait_until_ready()
 
 async def update_server_count():
     if SERVER_COUNT_CHANNEL_ID == 0:
