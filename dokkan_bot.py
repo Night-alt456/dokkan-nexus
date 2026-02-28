@@ -1049,7 +1049,7 @@ async def community_teams(interaction: discord.Interaction, event: str = None, p
         event_display = row['event'] + (f" — {row['stage']}" if row["stage"] else "")
         embed.add_field(name=f"📌 {event_display}", value="\u200b", inline=False)
         leader_image = build_team_fields(embed, row, show_footer=True)
-        if leader_image and not embed.thumbnail:
+        if leader_image and not embed.thumbnail.url:
             embed.set_thumbnail(url=leader_image)
 
     embed.set_footer(text=f"Use /communityteams page:{page+1} for more  •  Submit yours with /submitteam")
