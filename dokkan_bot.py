@@ -1813,6 +1813,7 @@ async def invite(interaction: discord.Interaction):
     )
     embed.add_field(name="🔗 Invite Link", value="[Click here to add Dokkan Nexus](https://bit.ly/DokkanNexus)", inline=False)
     embed.add_field(name="☕ Support", value="[Ko-fi — Help keep the bot running!](https://ko-fi.com/duskmatter/tiers)", inline=False)
+    embed.add_field(name="Top.gg", value="[Help my bot by up voting](https://top.gg/bot/1476112467947163768)", inline=False)
     embed.set_footer(text="Dokkan Nexus • Your Dokkan Battle Hub")
     await interaction.response.send_message(embed=embed)
 
