@@ -210,7 +210,7 @@ def find_card_url(name: str) -> str:
 GUILD_ID = 1476108585095139400
 TEAM_LOG_CHANNEL_ID = 1476108750384398376  # Channel where submitted teams are posted
 SERVER_COUNT_CHANNEL_ID = 1476257939470942279  # Replace with your voice channel ID
-SERVER_LIST_CHANNEL_ID = 0  # Replace with your text channel ID for server list
+SERVER_LIST_CHANNEL_ID = 1484122195260342383  # Replace with your text channel ID for server list
 
 @bot.event
 async def on_ready():
