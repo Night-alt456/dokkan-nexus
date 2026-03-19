@@ -1139,10 +1139,6 @@ class CommunityTeamsView(discord.ui.View):
         embed = build_community_embed(rows, self.page, self.total_pages, total, self.event)
         await interaction.response.edit_message(embed=embed, view=self)
 
-    @discord.ui.button(label="➕ Submit Team", style=discord.ButtonStyle.success)
-    async def submit_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_modal(SubmitTeamModal())
-
 @bot.tree.command(name="communityteams", description="Browse community submitted teams for challenge events")
 @app_commands.describe(event="Filter by challenge event")
 async def community_teams(interaction: discord.Interaction, event: str = None):
