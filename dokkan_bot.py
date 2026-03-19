@@ -26,23 +26,23 @@ TYPE_COLORS = {
 #E.g. "AGL": "<:AGL:123456789012345678>"
 
 TYPE_EMOJIS = {
-    "AGL": "<:AGL:1475499065134288987>",
-    "TEQ": "<:TEQ:1475500519031312444>",
-    "INT": "<:INT:1475500464882843668>",
-    "STR": "<:STR:1475500274196938955>",
-    "PHY": "<:PHY:1475500320837865593>",
+    "AGL": "<:dokkan_AGL:1477068036081979394>",
+    "TEQ": "<:dokkan_TEQ:1477068030298030141>",
+    "INT": "<:dokkan_INT:1477068031535485110>",
+    "STR": "<:dokkan_STR:1477068034660237312>",
+    "PHY": "<:dokkan_PHY:1477068033020264623>",
 }
 
 # Replace these with your actual server emoji IDs
 #e.g. "LR": "<:LR:123456789012345678>"
 
 RARITY_EMOJIS = {
-    "LR":  "<:LR:1475501050210287717>",
-    "UR":  "<:UR:1475500998939119690>", 
-    "SSR": "<:SSR:1475500937417330698>", 
-    "SR":  "<:SR:1475500902948536363>",  
-    "R":   "<:R:1475500855154184274>",
-    "N":   "<:N:1475500771930935428>",
+    "LR":  "<:dokkan_LR:1477068021901037668>",
+    "UR":  "<:dokkan_UR:1477068023511777300>",
+    "SSR": "<:dokkan_SSR:1477068024774398094>",
+    "SR":  "<:dokkan_SR:1477068026456314028>",
+    "R":   "<:dokkan_R:1477068027903082566>",
+    "N":   "<:dokkan_N:1477068029152989204>",
 }
 
 # ======================
@@ -56,27 +56,24 @@ MOD_ROLE_NAME = "Dokkan Mod"
 
 # Current challenge events — update this list when new events release
 CHALLENGE_EVENTS = [
-    "Super Battle Road",
-    "Ultimate Red Zone",
-    "Extreme Z-Area",
-    "Virtual Dokkan Ultimate Clash",
-    "Festival of Battles",
-    "Seriously Serious! All-Out Battles",
-    "Supreme Magnificent Battle",
-    "Battle-Hardened Formidable Foes",
-    "Boss Rush",
-    "Infinite Dragon Ball History",
-    "Legend of Goku",
-    "Dokkan Festival",
-    "Anniversary Battle",
+    "Fighting Legend Goku",
+    "Fighting Legend Vegeta",
+    "Fighting Legend Frieza",
+    "Dokkan Event Boss Rush",
     "Collection of Epic Battles",
-    "Extreme Dokkan Festival",
-    "Super Dokkan Festival",
-    "Legendary Goku Event",
-    "Phantom Zone",
-    "Strike Events",
-    "Treasure Dungeon",
+    "Super Battle Road",
+    "Fearsome Activition Cell Max",
+    "Fighting Sprit of the Saiyans and Pride of the Wicked Bloodline",
+    "Intense Fights",
+    "Heart-Pounding Heroine Battle",
+    "Festival of Battle",
+    "Ultimate Red Zone",
+    "Supreme Magnificent Battle",
+    "Seriously Serious! All-Out Battles",
+    "Seriously Serious! All-Out Battles 2",
 ]
+
+
 
 # ======================
 # BOT SETUP
@@ -213,6 +210,7 @@ def find_card_url(name: str) -> str:
 GUILD_ID = 1476108585095139400
 TEAM_LOG_CHANNEL_ID = 1476108750384398376  # Channel where submitted teams are posted
 SERVER_COUNT_CHANNEL_ID = 1476257939470942279  # Replace with your voice channel ID
+SERVER_LIST_CHANNEL_ID = 0  # Replace with your text channel ID for server list
 
 @bot.event
 async def on_ready():
@@ -228,6 +226,7 @@ async def on_ready():
     if not auto_sync.is_running():
         auto_sync.start()
         print("🔄 Auto-sync task started (every 8 hours)")
+    await update_server_list()
 
 @tasks.loop(hours=8)
 async def auto_sync():
@@ -267,11 +266,40 @@ async def update_server_count():
 async def on_guild_join(guild):
     print(f"✅ Joined server: {guild.name}")
     await update_server_count()
+    await update_server_list()
 
 @bot.event
 async def on_guild_remove(guild):
     print(f"❌ Left server: {guild.name}")
     await update_server_count()
+    await update_server_list()
+
+async def update_server_list():
+    if SERVER_LIST_CHANNEL_ID == 0:
+        return
+    channel = bot.get_channel(SERVER_LIST_CHANNEL_ID)
+    if not channel:
+        return
+    guilds = sorted(bot.guilds, key=lambda g: g.name.lower())
+    embed = discord.Embed(
+        title=f"📋 Dokkan Nexus — Server List",
+        description=f"Currently in **{len(guilds)}** servers",
+        color=discord.Color.from_rgb(255, 140, 0)
+    )
+    for guild in guilds:
+        joined = guild.me.joined_at.strftime("%b %d, %Y") if guild.me.joined_at else "Unknown"
+        embed.add_field(
+            name=guild.name,
+            value=f"👥 {guild.member_count} members • 📅 Joined {joined}",
+            inline=False
+        )
+    embed.set_footer(text=f"Last updated: {__import__('datetime').datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
+    # Delete old messages and post fresh
+    try:
+        await channel.purge(limit=5)
+        await channel.send(embed=embed)
+    except Exception as e:
+        print(f"⚠️  Could not update server list channel: {e}")
 
 # ======================
 # HELPERS
@@ -1033,20 +1061,25 @@ async def friend_autocomplete(interaction: discord.Interaction, current: str):
 # ======================
 # /communityteams
 # ======================
-@bot.tree.command(name="communityteams", description="Browse community submitted teams for challenge events")
-@app_commands.describe(
-    event="Filter by challenge event",
-    page="Page number (default 1)"
-)
-async def community_teams(interaction: discord.Interaction, event: str = None, page: int = 1):
-    await interaction.response.defer()
+def build_community_embed(rows, page, total_pages, total, event):
+    embed = discord.Embed(
+        title=f"🌍 Community Teams{f' — {event}' if event else ''}",
+        description=f"Page {page}/{total_pages}  •  {total} total submissions",
+        color=discord.Color.blurple()
+    )
+    for row in rows:
+        event_display = row['event'] + (f" — {row['stage']}" if row["stage"] else "")
+        embed.add_field(name=f"📌 {event_display}", value="\u200b", inline=False)
+        leader_image = build_team_fields(embed, row, show_footer=True)
+        if leader_image and not embed.thumbnail:
+            embed.set_thumbnail(url=leader_image)
+    embed.set_footer(text=f"Page {page}/{total_pages}  •  Submit your team with the button below!")
+    return embed
 
+def get_community_rows(event, page, per_page=3):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
-
-    per_page = 3
     offset = (page - 1) * per_page
-
     if event:
         total = conn.execute("SELECT COUNT(*) FROM community_teams WHERE event LIKE ?", (f"%{event}%",)).fetchone()[0]
         rows = conn.execute("""
@@ -1060,6 +1093,62 @@ async def community_teams(interaction: discord.Interaction, event: str = None, p
             ORDER BY submitted_at DESC LIMIT ? OFFSET ?
         """, (per_page, offset)).fetchall()
     conn.close()
+    return rows, total
+
+class SubmitTeamModal(discord.ui.Modal, title="Submit a Community Team"):
+    event = discord.ui.TextInput(label="Event Name", placeholder="e.g. Super Battle Road", required=True, max_length=100)
+    stage = discord.ui.TextInput(label="Stage (optional)", placeholder="e.g. Stage 5", required=False, max_length=100)
+    leader = discord.ui.TextInput(label="Leader Card Name", placeholder="e.g. Goku", required=True, max_length=100)
+    notes = discord.ui.TextInput(label="Notes (optional)", placeholder="Any tips or details about this team", required=False, style=discord.TextStyle.paragraph, max_length=300)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(
+            f"✅ Thanks! To submit your full team with all 6 card slots use `/submitteam` — it supports card autocomplete for accuracy!",
+            ephemeral=True
+        )
+
+class CommunityTeamsView(discord.ui.View):
+    def __init__(self, page, total_pages, event):
+        super().__init__(timeout=120)
+        self.page = page
+        self.total_pages = total_pages
+        self.event = event
+
+        if page <= 1:
+            self.prev_button.disabled = True
+        if page >= total_pages:
+            self.next_button.disabled = True
+
+    @discord.ui.button(label="◀ Prev", style=discord.ButtonStyle.secondary)
+    async def prev_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.page -= 1
+        rows, total = get_community_rows(self.event, self.page)
+        self.total_pages = max(1, (total + 2) // 3)
+        self.prev_button.disabled = self.page <= 1
+        self.next_button.disabled = self.page >= self.total_pages
+        embed = build_community_embed(rows, self.page, self.total_pages, total, self.event)
+        await interaction.response.edit_message(embed=embed, view=self)
+
+    @discord.ui.button(label="Next ▶", style=discord.ButtonStyle.secondary)
+    async def next_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.page += 1
+        rows, total = get_community_rows(self.event, self.page)
+        self.total_pages = max(1, (total + 2) // 3)
+        self.prev_button.disabled = self.page <= 1
+        self.next_button.disabled = self.page >= self.total_pages
+        embed = build_community_embed(rows, self.page, self.total_pages, total, self.event)
+        await interaction.response.edit_message(embed=embed, view=self)
+
+    @discord.ui.button(label="➕ Submit Team", style=discord.ButtonStyle.success)
+    async def submit_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.response.send_modal(SubmitTeamModal())
+
+@bot.tree.command(name="communityteams", description="Browse community submitted teams for challenge events")
+@app_commands.describe(event="Filter by challenge event")
+async def community_teams(interaction: discord.Interaction, event: str = None):
+    await interaction.response.defer()
+
+    rows, total = get_community_rows(event, 1)
 
     if not rows:
         return await interaction.followup.send(
@@ -1067,23 +1156,10 @@ async def community_teams(interaction: discord.Interaction, event: str = None, p
             ephemeral=True
         )
 
-    total_pages = max(1, (total + per_page - 1) // per_page)
-
-    embed = discord.Embed(
-        title=f"🌍 Community Teams{f' — {event}' if event else ''}",
-        description=f"Page {page}/{total_pages}  •  {total} total submissions",
-        color=discord.Color.blurple()
-    )
-
-    for row in rows:
-        event_display = row['event'] + (f" — {row['stage']}" if row["stage"] else "")
-        embed.add_field(name=f"📌 {event_display}", value="\u200b", inline=False)
-        leader_image = build_team_fields(embed, row, show_footer=True)
-        if leader_image and not embed.thumbnail:
-            embed.set_thumbnail(url=leader_image)
-
-    embed.set_footer(text=f"Use /communityteams page:{page+1} for more  •  Submit yours with /submitteam")
-    await interaction.followup.send(embed=embed)
+    total_pages = max(1, (total + 2) // 3)
+    embed = build_community_embed(rows, 1, total_pages, total, event)
+    view = CommunityTeamsView(1, total_pages, event)
+    await interaction.followup.send(embed=embed, view=view)
 
 @community_teams.autocomplete("event")
 async def community_event_autocomplete(interaction: discord.Interaction, current: str):
@@ -1743,6 +1819,18 @@ async def invite(interaction: discord.Interaction):
     embed.add_field(name="☕ Support", value="[Ko-fi — Help keep the bot running!](https://ko-fi.com/duskmatter/tiers)", inline=False)
     embed.set_footer(text="Dokkan Nexus • Your Dokkan Battle Hub")
     await interaction.response.send_message(embed=embed)
+
+# ======================
+# /servers
+# ======================
+@bot.tree.command(name="servers", description="Owner only — update the server list channel")
+async def servers(interaction: discord.Interaction):
+    if interaction.user.id != SUPER_ADMIN_ID:
+        return await interaction.response.send_message("❌ This command is owner only.", ephemeral=True)
+    await interaction.response.defer(ephemeral=True)
+    await update_server_list()
+    guilds = sorted(bot.guilds, key=lambda g: g.name.lower())
+    await interaction.followup.send(f"✅ Server list updated! Currently in **{len(guilds)}** servers.", ephemeral=True)
 
 # ======================
 # RUN
